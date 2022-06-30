@@ -6,6 +6,7 @@ import user_data
 from typing import Callable, Union
 import functools
 
+
 bot = telebot.TeleBot(config.token)
 
 
@@ -27,11 +28,12 @@ def exc_handler(method: Callable):
 def welcome(message):
     """Стартовое сообщение.Выбор команды"""
     user = message.from_user.first_name
-    bot.send_message(message.chat.id, 'Привет, <b>{user}</b>. Я могу помочь вам с поиском отеля.\nВыберите команду:'
-                                      '\n/bestdeal - отели ближе к центру города, с низкой ценой' \
-                                      '\n/lowprice - отели с низкой ценой' \
-                                      '\n/highprice - отели с высокой ценой' \
-                                      '\n/history - история поиска'.format(user=user), parse_mode='html')
+    text = ('Привет, <b>{user}</b>. Я могу помочь вам с поиском отеля.\nВыберите команду:'
+                                      '\n/bestdeal - отели ближе к центру города, с низкой ценой' 
+                                      '\n/lowprice - отели с низкой ценой' 
+                                      '\n/highprice - отели с высокой ценой' 
+                                      '\n/history - история поиска')
+    bot.send_message(message.chat.id, text.format(user=user), parse_mode='HTML')
 
 
 @bot.message_handler(commands=['history'])
@@ -40,9 +42,9 @@ def print_history(message):
     """Вывод истории запросов пользователя"""
     history = user_data.get_history(user_id=message.from_user.id)
     for date, info in history.items():
-        ans = '\nДата запроса: {time}' \
-              '\nКомманда: {command}' \
-              '\nВарианты отелей:'.format(
+        ans = ('\nДата запроса: {time}'
+              '\nКомманда: {command}' 
+              '\nВарианты отелей:').format(
             time=date,
             command=info['Command'],
         )
@@ -57,7 +59,8 @@ def print_history(message):
 @exc_handler
 def set_func(message):
     """Установка функции, выбраной пользователем"""
-    user_data.set_sorted_func(chat_id=message.chat.id, func=re.search(r'\w+', message.text).group())
+    pattern= r'\w+'
+    user_data.set_sorted_func(chat_id=message.chat.id, func=re.search(pattern, message.text).group())
     bot.send_message(chat_id=message.chat.id, text='Введите название города.')
 
     
@@ -99,7 +102,8 @@ def choose_price_range(message: types.Message) -> None:
 @exc_handler
 def choose_dist_range(message: types.Message) -> None:
     """Обработка диапазона цен, выбор диапазона расстояний"""
-    price_range = list(map(int, re.findall(r'[0-9]+', message.text)))
+    pattern = r'[0-9]+'
+    price_range = list(map(int, re.findall(pattern, message.text)))
     price_range.sort()
     if len(price_range) == 1:
         price_range.insert(0, 0)
@@ -114,7 +118,8 @@ def choose_dist_range(message: types.Message) -> None:
 @exc_handler
 def choose_night_value(message: types.Message) -> None:
     """Обработка диапазона расстояний, выбор кол-ва ночей пребывания"""
-    dist_range = list(map(int, re.findall(r'[0-9]+', message.text)))
+    pattern = r'[0-9]+'
+    dist_range = list(map(int, re.findall(pattern, message.text)))
     dist_range.sort()
     if len(dist_range) == 1:
         dist_range.insert(0, 0)
@@ -181,13 +186,13 @@ def get_results(message: types.Message) -> None:
         for index, i_data in enumerate(hotels_dict.values()):
             if index + 1 > user_data.get_hotels_value(chat_id=message.chat.id):
                 break
-            answer = '\nОтель: {name}' \
-                     '\nАдрес: {address}' \
-                     '\nРасстояние до: {distance}' \
-                     '\nЦена за сутки: {price}' \
-                     '\nЦена за {nights} ночей: ${total_price}' \
-                     '\nПосмотеть на Google maps: {address_link}' \
-                     '\nПодробнее по ссылке: {link}\n'.format(
+            answer = ('\nОтель: {name}'
+                     '\nАдрес: {address}'
+                     '\nРасстояние до: {distance}'
+                     '\nЦена за сутки: {price}' 
+                     '\nЦена за {nights} ночей: ${total_price}' 
+                     '\nПосмотеть на Google maps: {address_link}' 
+                     '\nПодробнее по ссылке: {link}\n').format(
                 name=i_data['name'],
                 address_link='https://www.google.ru/maps/place/' + i_data['coordinate'],
                 address=user_data.get_address(i_data),
@@ -211,4 +216,9 @@ def get_results(message: types.Message) -> None:
         bot.send_message(message.chat.id, 'Поиск не дал результатов...')
 
 
-bot.polling(non_stop=True, interval=0)
+def main():
+    bot.polling(non_stop=True, interval=0)
+
+
+if __name__ == '__main__':
+    main()

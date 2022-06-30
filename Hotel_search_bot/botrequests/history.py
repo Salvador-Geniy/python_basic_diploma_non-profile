@@ -12,9 +12,10 @@ def get_history(hotels_data: Union[Tuple[Union[Dict[str, Dict[str, Union[str, No
     result, hotel_url = hotels_data
     cur_time = datetime.datetime.now().strftime('%d %b %Y %H:%M:%S')
     my_list = []
+    url = 'https://hotels.com/ho'
     for i_hotel, i_data in result.items():
-        my_list.append('<a href="{url}">{name}</a>'.format(
-            url='https://hotels.com/ho' + str(i_data['id']), name=i_hotel))
+        _id = i_data['id']
+        my_list.append(f'<a href="{url}{_id}">{i_hotel}</a>')
     my_dict = {}
 
     my_dict['Command'] = user_data['sorted_func']
