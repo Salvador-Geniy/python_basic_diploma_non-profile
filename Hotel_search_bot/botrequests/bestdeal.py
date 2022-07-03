@@ -12,7 +12,7 @@ def get_querystring(user_city_id: str, hotels_value: int, today: str, lang: str,
     today: актуальная дата
     lang: язык
     cur: валюта
-    price_range: ценовой диапазон
+    price_range: ценовой диапазон.
     """
     my_query = {"destinationId": user_city_id, "pageNumber": "1", "pageSize": str(hotels_value),
                    "checkIn": today, "checkOut": today, "adults1": "1",
