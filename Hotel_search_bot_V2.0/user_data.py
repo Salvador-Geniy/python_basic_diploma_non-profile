@@ -97,9 +97,9 @@ def get_hotels(user: Optional[DataUser]) -> Union[Dict[str, Any], None]:
     hotels_data = main_request.hotels_search(user=user, sorted_func=user.sorted_func)
     key, value = history.get_history(hotels_data=hotels_data, user=user)
     write_data(user_id=user.user_id, key=key, value=value)
-    if hotels_data:
-        return hotels_data
-    return None
+
+    return hotels_data or None
+
 
 
 def get_address(i_data: Dict[str, Any]) -> str:
@@ -123,9 +123,9 @@ def get_photos(user: Optional[DataUser], hotel_id: int) -> Union[List[str], None
     for i_photo in photos:
         url_photo = i_photo['baseUrl'].replace('{size}', 'w')
         result.append(url_photo)
-    if result:
-        return result
-    return None
+
+    return result or None
+
 
 
 def get_landmarks(i_data: Dict[str, Any]) -> str:

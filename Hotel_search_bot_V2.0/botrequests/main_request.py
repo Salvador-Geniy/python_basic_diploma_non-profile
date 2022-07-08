@@ -19,19 +19,25 @@ headers = {
 }
 
 
-def check_city(message: types.Message) -> Dict[str, str]:
-    """
-    Выполнение HTTP-запроса - поиск городов
+def city_request(message: types.Message):
+    """Выполнение HTTP-запроса - поиск городов
     params:
     message: ссобщение пользователя
+    :param message:
     """
-
     querystring = {"query": message.text, "locale": 'en_EN'}
     response = requests.get(city_url, headers=headers, params=querystring, timeout=10)
     data = json.loads(response.text)
+    city_data = data['suggestions'][0]['entities']
+    return city_data
+
+def check_city(message: types.Message) -> Dict[str, str]:
+    """Функция формирования списка городов"""
+    city_data = city_request(message)
     pattern = '(\\w+)[\n<]'
     city_dict = {', '.join((city['name'], re.findall(pattern, city['caption']+'\n')[-1])): city['destinationId']
-                 for city in data['suggestions'][0]['entities']}
+                 for city in city_data}
+
     return city_dict
 
 
@@ -74,11 +80,7 @@ def get_hotels_dict(hotels_list) -> Dict[str, Optional[Hotel]]:
         id = hotel['id']
         address = hotel['address']
         landmarks = hotel['landmarks']
-        rate_plan = hotel.get('ratePlan', None)
-        if rate_plan is not None:
-            price = hotel['ratePlan']['price'].get('current')
-        else:
-            price = '-'
+        price = hotel.get('ratePlan', {}).get('price', {}).get('current', '-')
         coordinate = '+'.join(map(str, hotel['coordinate'].values()))
 
         hotels_dict[name] = Hotel(id=id, name=name, address=address, landmarks=landmarks,

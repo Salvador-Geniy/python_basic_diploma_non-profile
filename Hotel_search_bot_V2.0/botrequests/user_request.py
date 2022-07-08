@@ -48,7 +48,5 @@ def price(my_query: Optional['QueryString'], hotel_url: str, headers: Dict[str, 
     response = requests.get(hotel_url, headers=headers, params=querystring, timeout=20)
     data = json.loads(response.text)
     hotels_list = data['data']['body']['searchResults']['results']
-    if not hotels_list:
-        return None
 
-    return hotels_list
+    return hotels_list or None
