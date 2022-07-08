@@ -163,7 +163,7 @@ def set_photo_value(message: types.Message):
     bot.register_next_step_handler(message, get_results)
 
 
-# @exc_handler
+@exc_handler
 def get_results(message: types.Message) -> None:
     """Получение результатов"""
     if user.needed_photo:
