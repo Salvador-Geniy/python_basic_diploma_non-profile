@@ -44,13 +44,13 @@
 Нажмите кнопку Subscribe to Test
 Выберите бесплатный пакет (Basic)
 
-Скопируйте свой уникальный код ***RAPIDAPIKEY="YourRapidKey"*** в файл проекта **main_request.py**, в словарь(поле) 'headers'
+Скопируйте свой уникальный код **RAPIDAPIKEY="YourRapidKey"** в файл проекта **main_request.py**, в словарь(поле) **headers**
 
 Пример:
-headers = {
+**headers = {
     'x-rapidapi-host': 'hotels4.p.rapidapi.com',
     'x-rapidapi-key': "YourRapidKey"
-}
+}**
 
 
 Обращаем ваше внимание на то, что у базового пакета есть ограничение по
