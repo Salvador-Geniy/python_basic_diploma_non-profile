@@ -23,7 +23,7 @@ class DataUser:
     dist_range: list = None
     sorted_func: str = None
     history: dict = None
-    lang: str = 'en_EN'
+    lang: str = 'ru_RU'
     cur: str = 'USD'
 
 
