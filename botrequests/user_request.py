@@ -17,23 +17,20 @@ def best(my_query: Optional['QueryString'], user: Optional['DataUser'], hotel_ur
     pattern = r'\d[,.]?\d'
     querystring = asdict(my_query)
     while len(hotels_list) < user.hotels_value:
-        try:
-            response = requests.get(hotel_url, headers=headers, params=querystring, timeout=20)
-            data = json.loads(response.text)
-            result = data['data']['body']['searchResults']['results']
-            if not result:
-                return None
-            for i_hotel in result:
-                distance = re.findall(pattern, i_hotel['landmarks'][0]['distance'])[0].replace(',', '.')
-                if float(distance) > max(user.dist_range):
-                    raise ValueError('Превышено максимальное расстояние от центра города.')
-                elif min(user.dist_range) <= float(distance) <= max(user.dist_range):
-                    hotels_list.append(i_hotel)
+        response = requests.get(hotel_url, headers=headers, params=querystring, timeout=20)
+        data = json.loads(response.text)
+        result = data['data']['body']['searchResults']['results']
+        if not result:
+            return None
+        for i_hotel in result:
+            distance = re.findall(pattern, i_hotel['landmarks'][0]['distance'])[0].replace(',', '.')
+            if float(distance) > max(user.dist_range):
+                break
+            elif min(user.dist_range) <= float(distance) <= max(user.dist_range):
+                hotels_list.append(i_hotel)
 
-            querystring['pageNumber'] = str(int(querystring.get('pageNumber')) + 1)
+        querystring['pageNumber'] = str(int(querystring.get('pageNumber')) + 1)
 
-        except ValueError:
-            break
     return hotels_list
 
 

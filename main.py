@@ -2,11 +2,13 @@ import telebot
 import re
 import config
 from telebot import types
+from commands import history_com
 from user_data import *
 from typing import Callable, Union, Optional
 import functools
 from dataclasses import asdict
 import ans_dictionary as ad
+from commands import *
 
 
 bot = telebot.TeleBot(config.token)
@@ -21,7 +23,7 @@ def exc_handler(method: Callable):
         try:
             method(message)
         except Exception:
-            bot.send_message(message.chat.id, 'Что-то пошло не так... Давай сначала?')
+            bot.send_message(chat_id=message.chat.id, text=ad.answers['restart'][user.lang])
             welcome(message)
     return wrapper
 
@@ -37,21 +39,11 @@ def welcome(message):
 
 
 @bot.message_handler(commands=['history'])
-@exc_handler
 def print_history(message):
     """Вывод истории запросов пользователя"""
     user.user_id = message.from_user.id
-    hist_file = read_data(user_id=message.from_user.id)
-    for date, info in hist_file.items():
-        ans = ('\nДата запроса: {time}' 
-              '\nКомманда: {command}' 
-              '\nВарианты отелей:').format(
-            time=date,
-            command=info['Command'],
-        )
-        bot.send_message(message.from_user.id, ans)
-        for item in info['Hotels']:
-            bot.send_message(message.from_user.id, item, parse_mode='HTML', disable_web_page_preview=True)
+    history = history_com.history_com(message.from_user.id)
+    bot.send_message(message.from_user.id, history, parse_mode='HTML', disable_web_page_preview=True)
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
@@ -74,13 +66,9 @@ def choose_city(message):
     result = main_request.check_city(message)
     user.city_list = result
     keyboard = types.InlineKeyboardMarkup()
-    if not result:
-        bot.send_message(chat_id=message.chat.id, text=ad.answers['no_city'][user.lang])
-        bot.register_next_step_handler(message, choose_city)
-    else:
-        for city_name, city_id in result.items():
-            keyboard.add(types.InlineKeyboardButton(text=city_name, callback_data=city_id))
-        bot.edit_message_text(chat_id=message.chat.id, message_id=temp.id, text=ad.answers['results'][user.lang], reply_markup=keyboard)
+    for city_name, city_id in result.items():
+        keyboard.add(types.InlineKeyboardButton(text=city_name, callback_data=city_id))
+    bot.edit_message_text(chat_id=message.chat.id, message_id=temp.id, text=ad.answers['results'][user.lang], reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: ad.answers['results'][user.lang] in call.message.text)

@@ -171,6 +171,6 @@ def get_answer(i_data: Dict[str, Any], user: Optional[DataUser]) -> str:
         price=i_data['price'],
         nights=user.night_value,
         total_price=count_total_price(user, i_data['price']),
-        link='https://hotels.com/ho{id}'.format(id=str(i_data['id']))
+        link=f'https://hotels.com/ho{i_data["id"]}'
     )
     return answer
