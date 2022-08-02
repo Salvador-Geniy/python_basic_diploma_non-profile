@@ -18,7 +18,7 @@ def exc_handler(method: Callable):
         try:
             method(message)
         except Exception:
-            bot.send_message(chat_id=message.chat.id, text=ad.answers['restart'][user.lang])
+            bot.send_message(chat_id=message.chat.id, text=user.get_ans('restart'))
             welcome(message)
     return wrapper
 
