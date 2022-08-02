@@ -1,5 +1,5 @@
 from loader import bot
-import command
+import commands
 
 
 def main():
