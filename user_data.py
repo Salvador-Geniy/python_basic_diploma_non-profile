@@ -5,6 +5,7 @@ import re
 import json
 import os
 from botrequests import main_request, history
+from ans_dictionary import answers
 
 
 @dataclass
@@ -25,6 +26,10 @@ class DataUser:
     history: dict = None
     lang: str = 'ru_RU'
     cur: str = 'USD'
+
+
+    def get_ans(self, answer):
+        return answers[answer][self.lang]
 
 
 def write_data(user_id: int, key: str, value: Union[int, str, List[Union[int, float]], None, Dict[str, Union[str, List[str]]]]) -> None:

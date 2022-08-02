@@ -1,0 +1,17 @@
+{
+    "26 Jul 2022 16:42:04": {
+        "Command": "bestdeal",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho139938\">Casablanca Hotel by Library Hotel Collection</a>",
+            "<a href=\"https://hotels.com/ho484183\">The Knickerbocker Hotel</a>",
+            "<a href=\"https://hotels.com/ho150387\">Millennium Hotel Broadway Times Square</a>"
+        ]
+    },
+    "02 Aug 2022 10:38:01": {
+        "Command": "lowprice",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho260158\">Red Carpet Inn Newark Irvington, NJ</a>",
+            "<a href=\"https://hotels.com/ho2138348032\">Hotel 21 Nyc</a>"
+        ]
+    }
+}
