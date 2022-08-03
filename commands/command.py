@@ -1,5 +1,5 @@
 from loader import bot
-from user_data import *
+from database.user_data import *
 import functools
 from typing import Union, Callable
 from telebot import types
