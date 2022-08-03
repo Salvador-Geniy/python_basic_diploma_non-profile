@@ -1,0 +1,56 @@
+{
+    "26 Jul 2022 16:42:04": {
+        "Command": "bestdeal",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho139938\">Casablanca Hotel by Library Hotel Collection</a>",
+            "<a href=\"https://hotels.com/ho484183\">The Knickerbocker Hotel</a>",
+            "<a href=\"https://hotels.com/ho150387\">Millennium Hotel Broadway Times Square</a>"
+        ]
+    },
+    "02 Aug 2022 10:38:01": {
+        "Command": "lowprice",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho260158\">Red Carpet Inn Newark Irvington, NJ</a>",
+            "<a href=\"https://hotels.com/ho2138348032\">Hotel 21 Nyc</a>"
+        ]
+    },
+    "02 Aug 2022 22:34:12": {
+        "Command": "bestdeal",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho139938\">Casablanca Hotel by Library Hotel Collection</a>",
+            "<a href=\"https://hotels.com/ho484183\">The Knickerbocker Hotel</a>",
+            "<a href=\"https://hotels.com/ho150387\">Millennium Hotel Broadway Times Square</a>"
+        ]
+    },
+    "02 Aug 2022 22:37:59": {
+        "Command": "highprice",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho487932\">Baccarat Hotel and Residences New York</a>",
+            "<a href=\"https://hotels.com/ho451663\">Park Hyatt New York</a>",
+            "<a href=\"https://hotels.com/ho211803\">Mandarin Oriental, New York</a>"
+        ]
+    },
+    "02 Aug 2022 22:42:00": {
+        "Command": "lowprice",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho260158\">Red Carpet Inn Newark Irvington, NJ</a>",
+            "<a href=\"https://hotels.com/ho888087936\">Voyage Hotel</a>"
+        ]
+    },
+    "02 Aug 2022 22:43:54": {
+        "Command": "lowprice",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho671234752\">Guest House Amsterdam</a>",
+            "<a href=\"https://hotels.com/ho356011\">Quentin Arrive</a>",
+            "<a href=\"https://hotels.com/ho342845\">Flipper Hotel Amsterdam</a>"
+        ]
+    },
+    "02 Aug 2022 22:50:46": {
+        "Command": "highprice",
+        "Hotels": [
+            "<a href=\"https://hotels.com/ho263431\">Fairmont Heritage Place, Ghirardelli Square</a>",
+            "<a href=\"https://hotels.com/ho135055\">Hotel Drisco</a>",
+            "<a href=\"https://hotels.com/ho235570\">The St. Regis San Francisco</a>"
+        ]
+    }
+}

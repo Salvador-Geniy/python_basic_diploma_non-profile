@@ -5,7 +5,7 @@ from typing import Dict, Optional, List
 import datetime
 from telebot import types
 from func_data import *
-from botrequests import user_request
+import commands
 
 
 city_url = 'https://hotels4.p.rapidapi.com/locations/search'
@@ -31,6 +31,7 @@ def city_request(message: types.Message):
     city_data = data['suggestions'][0]['entities']
     return city_data
 
+
 def check_city(message: types.Message) -> Dict[str, str]:
     """Функция формирования списка городов"""
     city_data = city_request(message)
@@ -55,15 +56,17 @@ def hotels_search(user: Optional['DataUser'], sorted_func: str) -> Dict[str, Opt
         my_query.sortOrder = "DISTANCE_FROM_LANDMARK"
         my_query.priceMin = min(user.price_range)
         my_query.priceMax = max(user.price_range)
-        hotels_list = user_request.best(my_query, user, hotel_url, headers)
+        hotels_list = commands.bestdeal_com.best(my_query, user, hotel_url, headers)
     else:
         if sorted_func == 'lowprice':
             my_query.sortOrder = "PRICE"
+            hotels_list = commands.lowprice_com.lowprice(my_query=my_query, hotel_url=hotel_url, headers=headers)
 
         elif sorted_func == 'highprice':
             my_query.sortOrder = "PRICE_HIGHEST_FIRST"
+            hotels_list = commands.highprice_com.highprice(my_query=my_query, hotel_url=hotel_url, headers=headers)
 
-        hotels_list = user_request.price(my_query=my_query, hotel_url=hotel_url, headers=headers)
+        # hotels_list = commands.lowprice_com.lowprice(my_query=my_query, hotel_url=hotel_url, headers=headers)
 
     hotels_dict = get_hotels_dict(hotels_list)
     return hotels_dict

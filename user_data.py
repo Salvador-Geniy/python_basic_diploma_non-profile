@@ -5,6 +5,7 @@ import re
 import json
 import os
 from botrequests import main_request, history
+from ans_dictionary import answers
 
 
 @dataclass
@@ -25,6 +26,9 @@ class DataUser:
     history: dict = None
     lang: str = 'ru_RU'
     cur: str = 'USD'
+
+    def get_ans(self, answer):
+        return answers[answer][self.lang]
 
 
 def write_data(user_id: int, key: str, value: Union[int, str, List[Union[int, float]], None, Dict[str, Union[str, List[str]]]]) -> None:
@@ -165,12 +169,12 @@ def get_answer(i_data: Dict[str, Any], user: Optional[DataUser]) -> str:
               '\nПосмотеть на Google maps: {address_link}'
               '\nПодробнее по ссылке: {link}\n').format(
         name=i_data['name'],
-        address_link='https://www.google.ru/maps/place/{id}'.format(id=i_data['coordinate']),
+        address_link=f'https://www.google.ru/maps/place/{i_data["coordinate"]}',
         address=get_address(i_data),
         distance=get_landmarks(i_data),
         price=i_data['price'],
         nights=user.night_value,
         total_price=count_total_price(user, i_data['price']),
-        link='https://hotels.com/ho{id}'.format(id=str(i_data['id']))
+        link=f'https://hotels.com/ho{i_data["id"]}'
     )
     return answer
