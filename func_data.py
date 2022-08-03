@@ -24,5 +24,3 @@ class QueryString:
     currency: str = None
     priceMin: int = None
     priceMax: int = None
-
-

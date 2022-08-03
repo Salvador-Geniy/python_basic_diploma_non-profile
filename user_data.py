@@ -27,7 +27,6 @@ class DataUser:
     lang: str = 'ru_RU'
     cur: str = 'USD'
 
-
     def get_ans(self, answer):
         return answers[answer][self.lang]
 
@@ -170,7 +169,7 @@ def get_answer(i_data: Dict[str, Any], user: Optional[DataUser]) -> str:
               '\nПосмотеть на Google maps: {address_link}'
               '\nПодробнее по ссылке: {link}\n').format(
         name=i_data['name'],
-        address_link='https://www.google.ru/maps/place/{id}'.format(id=i_data['coordinate']),
+        address_link=f'https://www.google.ru/maps/place/{i_data["coordinate"]}',
         address=get_address(i_data),
         distance=get_landmarks(i_data),
         price=i_data['price'],
