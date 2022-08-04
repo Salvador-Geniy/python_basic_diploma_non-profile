@@ -40,7 +40,7 @@ def write_data(user_id: int, key: str, value: Union[int, str, List[Union[int, fl
     value: значение
     """
     i_data = read_data(user_id)
-    with open(os.path.join('database', f'{user_id}.json'), 'w') as file:
+    with open(os.path.join('database/json', f'{user_id}.json'), 'w') as file:
         i_data[key] = value
         json.dump(i_data, file, indent=4)
 
@@ -50,7 +50,7 @@ def read_data(user_id: int) -> Dict[str, Dict[Any, Any]]:
     params:
     user_id: user id
     """
-    path = os.path.join('database', f'{user_id}.json')
+    path = os.path.join('database/json', f'{user_id}.json')
     try:
         with open(path, 'r') as file:
             i_data = json.load(file)
