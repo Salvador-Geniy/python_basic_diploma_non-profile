@@ -56,5 +56,41 @@ answers = {
     },
     'restart': {
         'ru_RU': 'Что-то пошло не так... Давай сначала?'
+    },
+    'request_date': {
+        'ru_RU': 'Дата запроса'
+    },
+    'command_name': {
+        'ru_RU': 'Команда'
+    },
+    'hotels_options': {
+        'ru_RU': 'Варианты отелей'
+    },
+    'empty_history': {
+        'ru_RU': 'История запросов пуста'
+    },
+    'hotel_name': {
+        'ru_RU': 'Отель'
+    },
+    'address': {
+        'ru_RU': 'Адрес'
+    },
+    'dist_to': {
+        'ru_RU': 'Расстояние до'
+    },
+    'daily_price': {
+        'ru_RU': 'Цена за сутки'
+    },
+    'price_for': {
+        'ru_RU': 'Цена за'
+    },
+    'nights': {
+        'ru_RU': 'ночей'
+    },
+    'see_maps': {
+        'ru_RU': 'Посмотеть на Google maps'
+    },
+    'detailed_link': {
+        'ru_RU': 'Подробнее по ссылке'
     }
 }

@@ -4,8 +4,9 @@ from telebot import types
 import re
 import json
 import os
-from botrequests import main_request, history
-from ans_dictionary import answers
+from commands import history_com
+from botrequests import main_request
+from database.ans_dictionary import answers
 
 
 @dataclass
@@ -39,7 +40,7 @@ def write_data(user_id: int, key: str, value: Union[int, str, List[Union[int, fl
     value: значение
     """
     i_data = read_data(user_id)
-    with open(os.path.join('database', f'{user_id}.json'), 'w') as file:
+    with open(os.path.join('database/json', f'{user_id}.json'), 'w') as file:
         i_data[key] = value
         json.dump(i_data, file, indent=4)
 
@@ -49,7 +50,7 @@ def read_data(user_id: int) -> Dict[str, Dict[Any, Any]]:
     params:
     user_id: user id
     """
-    path = os.path.join('database', f'{user_id}.json')
+    path = os.path.join('database/json', f'{user_id}.json')
     try:
         with open(path, 'r') as file:
             i_data = json.load(file)
@@ -99,7 +100,7 @@ def get_hotels(user: Optional[DataUser]) -> Union[Dict[str, Any], None]:
     user: user
     """
     hotels_data = main_request.hotels_search(user=user, sorted_func=user.sorted_func)
-    key, value = history.get_history(hotels_data=hotels_data, user=user)
+    key, value = history_com.get_history(hotels_data=hotels_data, user=user)
     write_data(user_id=user.user_id, key=key, value=value)
 
     return hotels_data or None
@@ -131,7 +132,6 @@ def get_photos(user: Optional[DataUser], hotel_id: int) -> Union[List[str], None
     return result or None
 
 
-
 def get_landmarks(i_data: Dict[str, Any]) -> str:
     """
     Геттер для получения ориентиров и расстояния до отеля
@@ -161,20 +161,12 @@ def get_answer(i_data: Dict[str, Any], user: Optional[DataUser]) -> str:
     i_data: список отелей
     user: user
     """
-    answer = ('\nОтель: {name}'
-              '\nАдрес: {address}'
-              '\nРасстояние до: {distance}'
-              '\nЦена за сутки: {price}'
-              '\nЦена за {nights} ночей: ${total_price}'
-              '\nПосмотеть на Google maps: {address_link}'
-              '\nПодробнее по ссылке: {link}\n').format(
-        name=i_data['name'],
-        address_link=f'https://www.google.ru/maps/place/{i_data["coordinate"]}',
-        address=get_address(i_data),
-        distance=get_landmarks(i_data),
-        price=i_data['price'],
-        nights=user.night_value,
-        total_price=count_total_price(user, i_data['price']),
-        link=f'https://hotels.com/ho{i_data["id"]}'
-    )
+    answer = (f"\n{user.get_ans('hotel_name')}: {i_data['name']}"
+              f"\n{user.get_ans('address')}: {get_address(i_data)}"
+              f"\n{user.get_ans('dist_to')}: {get_landmarks(i_data)}"
+              f"\n{user.get_ans('daily_price')}: {i_data['price']}"
+              f"\n{user.get_ans('price_for')} {user.night_value} {user.get_ans('nights')}: ${count_total_price(user, i_data['price'])}"
+              f"\n{user.get_ans('see_maps')}: https://www.google.ru/maps/place/{i_data['coordinate']}"
+              f"\n{user.get_ans('detailed_link')}: https://hotels.com/ho{i_data['id']}\n")
+
     return answer

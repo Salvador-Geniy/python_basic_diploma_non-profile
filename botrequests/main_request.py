@@ -4,7 +4,7 @@ import json
 from typing import Dict, Optional, List
 import datetime
 from telebot import types
-from func_data import *
+from database.func_data import *
 import commands
 
 
@@ -66,8 +66,6 @@ def hotels_search(user: Optional['DataUser'], sorted_func: str) -> Dict[str, Opt
             my_query.sortOrder = "PRICE_HIGHEST_FIRST"
             hotels_list = commands.highprice_com.highprice(my_query=my_query, hotel_url=hotel_url, headers=headers)
 
-        # hotels_list = commands.lowprice_com.lowprice(my_query=my_query, hotel_url=hotel_url, headers=headers)
-
     hotels_dict = get_hotels_dict(hotels_list)
     return hotels_dict
 
@@ -89,7 +87,7 @@ def get_hotels_dict(hotels_list) -> Dict[str, Optional[Hotel]]:
         hotels_dict[name] = Hotel(id=id, name=name, address=address, landmarks=landmarks,
                                   price=price, coordinate=coordinate)
 
-    return hotels_dict
+    return hotels_dict or None
 
 
 def photos_search(count_photo: int, hotel_id: int) -> List[str]:
