@@ -15,7 +15,7 @@ photo_url = 'https://hotels4.p.rapidapi.com/properties/get-hotel-photos'
 
 headers = {
     'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-    'x-rapidapi-key': "abc44378b1msh3fa9fc2dad36980p1307b2jsn57be16cb77e4"
+    'x-rapidapi-key': "your-rapidapi-key"
 }
 
 
